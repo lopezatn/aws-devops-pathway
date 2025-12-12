@@ -8,6 +8,10 @@ resource "aws_launch_template" "sysdev_web_lt" {
     name = "sysdev-ec2-instance-profile"
   }
 
+  tags = {
+    Name = "dummy-tag"
+  }
+
   vpc_security_group_ids = [
     aws_security_group.web_sg.id,
   ]

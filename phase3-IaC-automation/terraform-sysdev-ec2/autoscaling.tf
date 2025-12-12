@@ -15,6 +15,15 @@ resource "aws_autoscaling_group" "sysdev_asg" {
 
   health_check_type         = "EC2"
   health_check_grace_period = 300
+  target_group_arns = [aws_lb_target_group.sysdev_tg.arn]
+
+	instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 90
+      instance_warmup        = 60
+    }
+  }
 
   tag {
     key                 = "Name"
@@ -22,5 +31,4 @@ resource "aws_autoscaling_group" "sysdev_asg" {
     propagate_at_launch = true
   }
 
-  target_group_arns = [aws_lb_target_group.sysdev_tg.arn]
 }
