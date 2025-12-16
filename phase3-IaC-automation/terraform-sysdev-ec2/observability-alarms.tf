@@ -103,27 +103,3 @@ resource "aws_cloudwatch_metric_alarm" "tg_healthy_hosts_low" {
   alarm_actions = [local.alerts_topic_arn]
   ok_actions    = [local.alerts_topic_arn]
 }
-
-########################
-# ASG in-service instances too low
-########################
-resource "aws_cloudwatch_metric_alarm" "asg_in_service_low" {
-  alarm_name          = "sysdev-asg-inservice-low"
-  alarm_description   = "ASG InService instances too low for expected baseline."
-  namespace           = "AWS/AutoScaling"
-  metric_name         = "GroupInServiceInstances"
-  statistic           = "Minimum"
-  period              = 60
-  evaluation_periods  = 2
-  datapoints_to_alarm = 2
-  threshold           = 1
-  comparison_operator = "LessThanThreshold"
-  treat_missing_data  = "breaching"
-
-  dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.sysdev_asg.name
-  }
-
-  alarm_actions = [local.alerts_topic_arn]
-  ok_actions    = [local.alerts_topic_arn]
-}

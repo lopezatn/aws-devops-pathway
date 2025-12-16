@@ -13,10 +13,10 @@ resource "aws_lb" "sysdev_alb" {
 
 # Target Group for the ASG instances
 resource "aws_lb_target_group" "sysdev_tg" {
-  name     = "sysdev-tg"
-  port     = 80
-  protocol = "HTTP"
-  vpc_id   = "vpc-0b18e9d3e37be5edc"
+  name        = "sysdev-tg"
+  port        = 80
+  protocol    = "HTTP"
+  vpc_id      = "vpc-0b18e9d3e37be5edc"
   target_type = "instance"
 
   health_check {

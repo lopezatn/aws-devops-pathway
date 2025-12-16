@@ -15,9 +15,9 @@ resource "aws_autoscaling_group" "sysdev_asg" {
 
   health_check_type         = "ELB"
   health_check_grace_period = 300
-  target_group_arns = [aws_lb_target_group.sysdev_tg.arn]
+  target_group_arns         = [aws_lb_target_group.sysdev_tg.arn]
 
-	instance_refresh {
+  instance_refresh {
     strategy = "Rolling"
     preferences {
       min_healthy_percentage = 90
