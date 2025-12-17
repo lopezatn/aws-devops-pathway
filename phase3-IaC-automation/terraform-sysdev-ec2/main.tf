@@ -47,7 +47,15 @@ resource "aws_security_group" "web_sg" {
   }
 }
 
-# IAM Role for EC2
+
+
+# IAM Instance Profile
+resource "aws_iam_instance_profile" "ec2_profile" {
+  name = "sysdev-ec2-instance-profile"
+  role = aws_iam_role.ec2_role.name
+}
+
+# IAM Role
 resource "aws_iam_role" "ec2_role" {
   name = "sysdev-ec2-role"
 
@@ -65,7 +73,7 @@ resource "aws_iam_role" "ec2_role" {
   })
 }
 
-# IAM Policy to allow EC2 DescribeInstances
+# IAM Policy
 resource "aws_iam_role_policy" "ec2_describe_instances" {
   name = "sysdev-ec2-describe-instances"
   role = aws_iam_role.ec2_role.id
@@ -82,12 +90,6 @@ resource "aws_iam_role_policy" "ec2_describe_instances" {
       }
     ]
   })
-}
-
-# IAM Instance Profile for EC2
-resource "aws_iam_instance_profile" "ec2_profile" {
-  name = "sysdev-ec2-instance-profile"
-  role = aws_iam_role.ec2_role.name
 }
 
 output "security_group_id" {
