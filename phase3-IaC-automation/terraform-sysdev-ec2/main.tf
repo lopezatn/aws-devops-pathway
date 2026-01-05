@@ -17,18 +17,31 @@ data "aws_ssm_parameter" "ubuntu_ami" {
   name = "/aws/service/canonical/ubuntu/server/jammy/stable/current/amd64/hvm/ebs-gp2/ami-id"
 }
 
+# Get default VPC
+data "aws_vpc" "default" {
+  default = true
+}
+
+# Get subnets in the default VPC
+data "aws_subnets" "default_vpc_subnets" {
+  filter {
+    name   = "vpc-id"
+    values = [data.aws_vpc.default.id]
+  }
+}
+
 # Security Group for SSH + HTTP
 resource "aws_security_group" "web_sg" {
   name        = "sysdev-web-sg"
   description = "Allow SSH and HTTP"
-  vpc_id      = "vpc-0b18e9d3e37be5edc"
+  vpc_id      = "aws_vpc.default.id"
 
   ingress {
     description = "SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["185.255.128.69/32"]
+    cidr_blocks = ["86.104.249.102/32"]
   }
 
   ingress {
@@ -94,4 +107,12 @@ resource "aws_iam_role_policy" "ec2_describe_instances" {
 
 output "security_group_id" {
   value = aws_security_group.web_sg.id
+}
+
+output "vpc_id" {
+  value = data.aws_vpc.default.id
+}
+
+output "subnet_ids" {
+  value = data.aws_subnets.default_vpc_subnets.ids
 }

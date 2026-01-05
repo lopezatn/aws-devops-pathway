@@ -4,11 +4,7 @@ resource "aws_lb" "sysdev_alb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.web_sg.id]
 
-  subnets = [
-    "subnet-0a3ab44f6771e1f6d", # eu-north-1a
-    "subnet-0f6a4dc24d6c81f3a", # eu-north-1c
-    "subnet-03971a428f793d2e7", # eu-north-1b
-  ]
+  subnets = data.aws_subnets.default_vpc_subnets.ids
 }
 
 # Target Group for the ASG instances
@@ -16,7 +12,7 @@ resource "aws_lb_target_group" "sysdev_tg" {
   name        = "sysdev-tg"
   port        = 80
   protocol    = "HTTP"
-  vpc_id      = "vpc-0b18e9d3e37be5edc"
+  vpc_id      = "aws_vpc.default.id"
   target_type = "instance"
 
   health_check {

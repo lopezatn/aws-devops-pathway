@@ -4,9 +4,7 @@ resource "aws_autoscaling_group" "sysdev_asg" {
   min_size         = 1
   desired_capacity = 1
 
-  vpc_zone_identifier = [
-    "subnet-0a3ab44f6771e1f6d"
-  ]
+  vpc_zone_identifier = data.aws_subnets.default_vpc_subnets.ids
 
   launch_template {
     id      = aws_launch_template.sysdev_web_lt.id
