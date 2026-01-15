@@ -30,7 +30,7 @@ data "aws_subnets" "default_vpc_subnets" {
   }
 }
 
-# Security Group for SSH + HTTP
+# Security Group
 resource "aws_security_group" "web_sg" {
   name        = "sysdev-web-sg"
   description = "Allow SSH and HTTP"

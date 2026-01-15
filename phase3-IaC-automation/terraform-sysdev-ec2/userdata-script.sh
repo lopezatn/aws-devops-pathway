@@ -12,8 +12,6 @@ sed -i 's|root /var/www/html;|root /var/www/portfolio;|' /etc/nginx/sites-availa
 nginx -t
 systemctl reload nginx
 
-# --- CloudWatch Agent: install + configure log shipping for Nginx ---
-
 # Install CloudWatch Agent (Ubuntu)
 cd /tmp
 wget -q https://s3.amazonaws.com/amazoncloudwatch-agent/ubuntu/amd64/latest/amazon-cloudwatch-agent.deb
