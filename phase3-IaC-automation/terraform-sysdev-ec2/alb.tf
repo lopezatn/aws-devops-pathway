@@ -1,18 +1,17 @@
-# Application Load Balancer
-resource "aws_lb" "sysdev_alb" {
-  name               = "sysdev-alb"
+resource "aws_lb" "webhost_alb" {
+  name               = "webhost-alb"
   load_balancer_type = "application"
   security_groups    = [aws_security_group.web_sg.id]
+  subnets            = aws_subnet.public[*].id
 
-  subnets = data.aws_subnets.default_vpc_subnets.ids
+  internal           = false
 }
 
-# Target Group for the ASG instances
-resource "aws_lb_target_group" "sysdev_tg" {
-  name        = "sysdev-tg"
+resource "aws_lb_target_group" "webhost_tg" {
+  name        = "webhost-tg"
   port        = 80
   protocol    = "HTTP"
-  vpc_id      = data.aws_vpc.default.id
+  vpc_id      = aws_vpc.main.id
   target_type = "instance"
 
   health_check {
@@ -27,19 +26,13 @@ resource "aws_lb_target_group" "sysdev_tg" {
   }
 }
 
-# Listener: ALB listens on port 80 and forwards to the target group
 resource "aws_lb_listener" "http" {
-  load_balancer_arn = aws_lb.sysdev_alb.arn
+  load_balancer_arn = aws_lb.webhost_alb.arn
   port              = 80
   protocol          = "HTTP"
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.sysdev_tg.arn
+    target_group_arn = aws_lb_target_group.webhost_tg.arn
   }
-}
-
-output "alb_dns_name" {
-  description = "Public DNS name of the Application Load Balancer"
-  value       = aws_lb.sysdev_alb.dns_name
 }
