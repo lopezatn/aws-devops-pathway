@@ -10,8 +10,8 @@ resource "aws_cloudwatch_metric_alarm" "asg_cpu_high" {
   metric_name = "CPUUtilization"
 
   dimensions = {
-    AutoScalingGroupName = aws_autoscaling_group.sysdev_asg.name
+    AutoScalingGroupName = aws_autoscaling_group.webhost_asg.name
   }
 
-  alarm_actions = [aws_sns_topic.sysdev_alerts.arn]
+  alarm_actions = [aws_sns_topic.webhost_alerts.arn]
 }

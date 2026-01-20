@@ -24,12 +24,12 @@ variable "min_size" {
 
 variable "region" {
   description = "AWS Region"
-  type = string
-  default = "eu-central-1"
+  type        = string
+  default     = "eu-central-1"
 }
 
 variable "profile" {
   description = "AWS CLI profile to use"
-  type = string
-  default = "webhost"
+  type        = string
+  default     = "webhost"
 }
