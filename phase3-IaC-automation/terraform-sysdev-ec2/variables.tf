@@ -21,3 +21,15 @@ variable "min_size" {
   type        = number
   default     = 1
 }
+
+variable "region" {
+  description = "AWS Region"
+  type = string
+  default = "eu-central-1"
+}
+
+variable "profile" {
+  description = "AWS CLI profile to use"
+  type = string
+  default = "webhost"
+}

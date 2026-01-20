@@ -1,16 +1,20 @@
-output "security_group_id" {
-  value = aws_security_group.web_sg.id
-}
-
 output "vpc_id" {
-  value = data.aws_vpc.default.id
+  description = "VPC"
+  value = aws_vpc.main.id
 }
 
-output "subnet_ids" {
-  value = data.aws_subnets.default_vpc_subnets.ids
+output "public_subnet_ids" {
+  description = "Public Subnet IDs"
+  value = aws_subnet.public[*].id
+}
+
+output "private_subnet_ids" {
+  description = "Private Subnet IDs"
+  value = aws_subnet.private[*].id
 }
 
 output "alb_dns_name" {
-  description = "Public DNS name of the Application Load Balancer"
+  description = "ALB DNS"
   value       = aws_lb.webhost_alb.dns_name
 }
+
