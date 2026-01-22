@@ -9,7 +9,7 @@ resource "aws_launch_template" "webhost_lt" {
   }
 
   vpc_security_group_ids = [
-    aws_security_group.webhost_sg.id,
+    aws_security_group.ec2_sg.id,
   ]
 
   user_data = base64encode(file("${path.module}/userdata-script.sh"))
