@@ -2,5 +2,5 @@
 
 This folder contains a script that runs a system update, installs the Nginx service, enables it, and starts it.
 
-# Use:
+## Use:
 Understand the basics of services automation with scripting.
